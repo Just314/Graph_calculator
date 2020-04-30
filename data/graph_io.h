@@ -19,7 +19,7 @@ public:
     Graph_io(std::string name);
     void SetGraph(Graph setted);
     void Open();
-    Graph Read();
+    Graph* Read();
     void Write(std::string data);
     void Close();
 };

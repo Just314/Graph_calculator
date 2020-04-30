@@ -15,7 +15,12 @@ graph.cpp - stores graph's data and primitive data management methods. Model cla
 
 graph_io.cpp - performs file processing and i/o for the system. Repo class, composed with the graph.
 
-alg.cpp (other one, not yet implemented) - contains interface definition for other algorithm classes.
+alg.h - contains interface definition for other algorithm classes.
 
-alg_fac.cpp (nyi - not yet implemented) - contains factory method for algrithm construction on binding level.
+alg_fac_meth.h - contains factory methods for algrithm construction on binding level.
+
+alg_fac_meth.cpp - main logic binding algorithm, selected in the 
+Perform Calc operation to the real calculations;
+
+Alg_select.cpp - selector for algorithms on enum (WIP)
 

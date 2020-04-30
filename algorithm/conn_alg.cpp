@@ -1,4 +1,6 @@
 #include <bits/stdc++.h> 
+#include "conn_alg.h"
+
 using namespace std; 
 int n, a, counter = 0;
 vector <int> adj[101];
@@ -14,7 +16,7 @@ void dfs(int s) {
 }
 
 
-int main() {
+void Connectedness_check::Calculate() {
     while (cin >> n) {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {

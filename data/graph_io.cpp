@@ -87,7 +87,7 @@ void Graph_io::Write(string data){
     Close();
 }
 
-Graph Graph_io::Read(){
+Graph* Graph_io::Read(){
     Open();
     u_short vnum, enums; bool hvw,hew;
     file.read((char*)&vnum,sizeof(u_short));
@@ -97,13 +97,13 @@ Graph Graph_io::Read(){
 
     cout << vnum << " "<< enums << " "<< hvw << " "<< hew << "\n";
 
-    Graph gr = Graph(vnum);
+    Graph* gr = new Graph(vnum);
     for (u_short i = 0; i < enums; i++)
     {
         u_short a,b;
         file.read((char*)&a,sizeof(u_short));
         file.read((char*)&b,sizeof(u_short));
-        gr.addEdge(a,b);
+        gr->addEdge(a,b);
     }
     
 

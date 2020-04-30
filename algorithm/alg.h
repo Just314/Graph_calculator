@@ -1,16 +1,12 @@
-#ifndef ALG_H
-#define ALG_H
-#include <bits/stdc++.h>
-#include "../data/graph.h"
+#ifndef ALG_BASIS_H
+#define ALG_BASIS_H
 
-class dfs{
-    private:
-        Graph *g;
-        
-    public:
-        dfs();
-        void run();
+class IAlg
+{   
+public:
+   virtual ~IAlg(){}
+   virtual void Calculate() = 0;
+   virtual void Initialize(Graph* g) = 0;
 };
-
 
 #endif

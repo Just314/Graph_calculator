@@ -1,5 +1,7 @@
-./output
+output
 
 .vscode
 
 .VSCodeCounter
+
+*.
