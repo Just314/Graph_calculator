@@ -22,6 +22,7 @@ public:
     Graph* Read();
     void Write(std::string data);
     void Close();
+    void Create();
 };
 
 

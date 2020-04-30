@@ -22,7 +22,7 @@ public:
     u_short getVertCount(){return verticies_num;}
     bool hasVW(){return vertecies_W.size()>0;}
     bool hasEW(){return edges_W.size()>0;}
-    void print (u_short v); 
+    std::string MatrixToString(); 
     
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
     std::pair<int,int> getEdge(int index){return edges[index];}

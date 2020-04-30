@@ -21,3 +21,24 @@ void Graph::addEdge(u_short first, u_short second){
 /*realize search of out/in degs
     
 }*/
+
+string Graph::MatrixToString(){
+    string out;
+    out += "  ";
+    for ( u_short i =0;i<verticies_num; i++)
+    {
+        out+=char(97+i);
+        out+=" ";
+    }
+    out+="\n";
+    for(u_short i =0;i<verticies_num;i++){
+        out+=char(97+i);
+        out+=" ";
+        for(u_short j =0; j<verticies_num;j++){
+            out+=to_string(adj[i][j]);
+            out+=" ";
+        }
+        out+="\n";
+    }
+    return out;
+}

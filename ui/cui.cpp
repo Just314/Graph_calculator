@@ -6,8 +6,10 @@ Cui::Cui(){
 
 }
 
-
-
+enum CalcCommand {WriteGraph, CalculateGraph, ReadGraph, Terminate, UnknownResponse};
+void CreateGraph();
+void DisplayGraph();
+CalcCommand CheckMode();
 
 void Cui::welcome()
 {
@@ -22,26 +24,89 @@ void Cui::welcome()
 void Cui::loop(){
     while (true)
     {
-        cout << "File name or a command:";
-        string name;
-        cin >> name;
-
-        if (name == "exit"){
-            return;
-        }
+        auto command = CheckMode();
         
-        Graph_io in = Graph_io(name);
-
-        Graph gr = Graph(4);
-        gr.addEdge(1,2);
-        gr.addEdge(2,3);
-        gr.addEdge(4,1);
-        in.SetGraph(gr);
-        in.Write("test");
-        Graph* g = in.Read();
-        cout << g->getVertCount() << " " <<g->getEdgesCount()<<"\n";
-        for(auto i : g->getAllEdges())
-            cout << i.first << " " <<i.second<<"\n";
-        //cout << "If you want to test another graph please type its file name. If you want to leave the programm type \"exit\"\n\n";
+        switch (command)
+        {
+        case WriteGraph:
+            CreateGraph();
+            break;
+        case CalculateGraph:
+            break;
+        case ReadGraph:
+            DisplayGraph();
+            break;
+        case Terminate:
+            return;
+        default:
+            break;
+        }
     }
+}
+
+
+
+CalcCommand CheckMode(){
+    cout 
+    << "Please enter one of these Commands:\n"  
+    << "    To create new graph enter: \"new\"\n"
+    << "    To perform calculations and run algorithms enter: \"run\"\n"
+    << "    To display properties of the graph enter: \"read\"\n"
+    << "    To leave programm type: \"exit\"\n"
+    ;
+    
+    string response; cin >> response;
+
+    if (response.find("read")!=string::npos){
+        return ReadGraph;
+    }
+
+    if (response.find("new")!=string::npos){
+        return WriteGraph;
+    }
+
+    if (response.find("run")!=string::npos){
+        return CalculateGraph;
+    }
+
+    if (response.find("exit")!=string::npos){
+        return Terminate;
+    }
+    return UnknownResponse;
+}
+
+void CreateGraph(){
+    cout
+    << "Please enter the name of the file: ";
+    string name; cin >> name;
+    Graph_io in = Graph_io(name);
+        Graph gr = Graph(4);
+            gr.addEdge(1,2);
+            gr.addEdge(2,3);
+            gr.addEdge(4,1);
+            in.SetGraph(gr);
+        
+    in.Write("test");
+    
+    cout 
+    << "\n"
+    << "Operation is succesful\n"
+    << "--------------------\n"
+    << "\n"
+    ;
+}
+
+void DisplayGraph(){
+    cout
+    << "Please enter the name of the file: ";
+    string name; cin >> name;
+    Graph_io in = Graph_io(name);
+    Graph* g = in.Read();
+    cout
+    <<"Number of vertecies: " << g->getVertCount() << "\n"
+    <<"Number of edeges: " << g->getEdgesCount()<< "\n"
+    <<"Adjacency Matrix: \n\n"
+    <<g->MatrixToString()
+    <<"--------------------\n\n"
+    ;
 }

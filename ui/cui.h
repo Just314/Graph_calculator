@@ -5,7 +5,7 @@
 class Cui
 {
 private:
-    
+   
 
 public:
     Cui();

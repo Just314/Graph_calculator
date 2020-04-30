@@ -36,8 +36,12 @@ void Graph_io::Open(){
     {
         std::cerr << e.what() << '\n';
     }
-    
-    
+}
+
+void Graph_io::Create(){
+    file.open(file_name, ios::out | ios::binary);
+    file.close();
+    file.open(file_name, ios::out | ios::in | ios::binary);
 }
 
 void Graph_io::Close(){
@@ -59,7 +63,7 @@ std::istream & binary_read(std::istream& stream, T& value){
 }
 
 void Graph_io::Write(string data){
-    Open();
+    Create();
     file.seekp(0);
     u_short vcount = g.getVertCount();
     u_short ecount = g.getEdgesCount();
