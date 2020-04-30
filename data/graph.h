@@ -1,6 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <bits/stdc++.h>
+typedef unsigned short int u_short;
 
 class Graph
 {
@@ -10,6 +11,7 @@ private:
     std::vector<u_short> vertecies_W;
     std::vector<std::pair<u_short,u_short>> edges;
     std::vector<u_short> edges_W;
+    u_short **adj;
 public:
     Graph(u_short v);
     Graph(){};
@@ -20,6 +22,7 @@ public:
     u_short getVertCount(){return verticies_num;}
     bool hasVW(){return vertecies_W.size()>0;}
     bool hasEW(){return edges_W.size()>0;}
+    void print (u_short v); 
     
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
     std::pair<int,int> getEdge(int index){return edges[index];}
