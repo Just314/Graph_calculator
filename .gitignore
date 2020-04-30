@@ -1,3 +1,4 @@
+
 output
 
 .vscode
@@ -5,3 +6,5 @@ output
 .VSCodeCounter
 
 *.
+
+*.o
