@@ -95,8 +95,6 @@ Graph* Graph_io::Read(){
     file.read((char*)&hvw,sizeof(bool));
     file.read((char*)&hew,sizeof(bool));
 
-    cout << vnum << " "<< enums << " "<< hvw << " "<< hew << "\n";
-
     Graph* gr = new Graph(vnum);
     for (u_short i = 0; i < enums; i++)
     {

@@ -9,4 +9,5 @@ string IALGFM::ExecuteAlgorithm(Graph_io* g){
     alg->Initialize(g->Read());
     alg->Calculate();
 
+    return "ok";
 }

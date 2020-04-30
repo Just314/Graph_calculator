@@ -1,7 +1,7 @@
 #ifndef ALG_FACT_H
 #define ALG_FACT_H
 
-#include "graph_io.h"
+#include "../data/graph_io.h"
 #include "alg.h"
 #include "conn_alg.h"
 

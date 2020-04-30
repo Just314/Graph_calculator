@@ -38,9 +38,9 @@ void Cui::loop(){
         gr.addEdge(4,1);
         in.SetGraph(gr);
         in.Write("test");
-        Graph g = in.Read();
-        cout << g.getVertCount() << " " <<g.getEdgesCount()<<"\n";
-        for(auto i : g.getAllEdges())
+        Graph* g = in.Read();
+        cout << g->getVertCount() << " " <<g->getEdgesCount()<<"\n";
+        for(auto i : g->getAllEdges())
             cout << i.first << " " <<i.second<<"\n";
         //cout << "If you want to test another graph please type its file name. If you want to leave the programm type \"exit\"\n\n";
     }

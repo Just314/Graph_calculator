@@ -15,6 +15,7 @@ void dfs(int s) {
     }
 }
 
+void Connectedness_check::Initialize(Graph* g){}
 
 void Connectedness_check::Calculate() {
     while (cin >> n) {
