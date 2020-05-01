@@ -16,11 +16,25 @@ void Graph::addEdge(u_short first, u_short second){
     adj[first-1][second-1]++;
 }
 
-/*vector<pair<int,int>> Graph::searchConnections(int v_num){
-    // TODO
-/*realize search of out/in degs
-    
-}*/
+std::vector<int> Graph::searchConnectionsOut(int v_num){
+    vector<int> Out;
+    for (int i = 0; i < edges.size(); i++) {
+        if (edges[i].first == v_num-1) {
+            Out.push_back(i);
+        }
+    }
+    return Out;
+}
+
+std::vector<int> Graph::searchConnectionsIn(int v_num){
+    vector<int> In;
+    for (int i = 0; i < edges.size(); i++) {
+        if (edges[i].second == v_num-1) {
+            In.push_back(i);
+        }
+    }
+    return In;
+}
 
 string Graph::MatrixToString(){
     string out;

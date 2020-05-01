@@ -27,7 +27,8 @@ public:
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
     std::pair<int,int> getEdge(int index){return edges[index];}
     
-    std::vector<std::pair<int,int>> searchConnections(int v_num);
+    std::vector<int> searchConnectionsOut(int v_num); //Search for all edges out of vertex[v_num];
+    std::vector<int> searchConnectionsIn(int v_num);  //Search for all edges into vertex[v_num];
 };
 
 #endif
