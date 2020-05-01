@@ -104,7 +104,8 @@ void Graph_io::Write(string data){
     Create();
     file.seekp(0);
 
-    file.write((char*)&g.type,sizeof(GraphClassify));
+    u_int16_t meta = g.type;
+    file.write((char*)&meta,sizeof(meta));
 
     u_short vcount = g.getVertCount();
     u_short ecount = g.getEdgesCount();
@@ -145,7 +146,7 @@ Graph* Graph_io::Read(){
     Open();
     u_short vnum, enums; bool hvw,hew;
 
-    GraphClassify meta;
+    u_int16_t meta;
 
     file.read((char*)&meta, sizeof(meta));
 
@@ -183,6 +184,7 @@ Graph* Graph_io::Read(){
         gr->addEdge(a,b);
     }
     
+    gr->type = static_cast<GraphClassify> (meta);
 
     Close();
     return gr;

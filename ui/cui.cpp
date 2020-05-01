@@ -1,5 +1,6 @@
 #include "cui.h"
 #include "../data/graph_io.h"
+#include "../algorithm/alg_fac_meth.h"
 using namespace std;
 
 Cui::Cui(){
@@ -10,6 +11,7 @@ enum CalcCommand {WriteGraph, CalculateGraph, ReadGraph, Terminate, UnknownRespo
 void CreateGraph();
 void DisplayGraph();
 CalcCommand CheckMode();
+void Executor();
 
 void Cui::welcome()
 {
@@ -32,6 +34,7 @@ void Cui::loop(){
             CreateGraph();
             break;
         case CalculateGraph:
+            Executor();
             break;
         case ReadGraph:
             DisplayGraph();
@@ -132,4 +135,17 @@ void DisplayGraph(){
     cout 
     <<"--------------------\n\n"
     ;
+}
+
+void Executor(){
+    cout 
+    << "Please enter the name of the file: "
+    ;
+    string name; cin >> name;
+    Graph_io in = Graph_io(name);
+
+    IALGFM* algo = new BuildConnectedness();
+    auto ans = algo->ExecuteAlgorithm(&in);
+    cout
+    << ans << "\n";
 }
