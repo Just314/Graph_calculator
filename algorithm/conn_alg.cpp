@@ -21,7 +21,7 @@ string Connectedness_check::Calculate() {
     string Is_Connected;
     visited.assign(cardinal+1, false);
     Depth_Fist_Search(1);
-    if (counter == cardinal) {
+    if (counter >= cardinal) {
         Is_Connected = "Graph is connected.\n";
     }
     else {

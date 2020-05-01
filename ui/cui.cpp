@@ -83,20 +83,58 @@ void CreateGraph(){
     << "Please enter the name of the file: ";
     string name; cin >> name;
     Graph_io in = Graph_io(name);
-        Graph gr = Graph(4,true);
-            gr.type |= Weighted;
-            gr.type |= MultiGraph;
-            gr.type |= Complete;
-            gr.setVWeight(5,1);
-            gr.setVWeight(4,2);
-            gr.setVWeight(3,3);
-            gr.setVWeight(1,4);
-            gr.addUndirectedEdge(1,2);
-            gr.addUndirectedEdge(1,3);
-            gr.addUndirectedEdge(1,4);
-            gr.addUndirectedEdge(2,3);
-            gr.addUndirectedEdge(3,4);
-            gr.addUndirectedEdge(2,4);
+
+    cout 
+    <<"How many verticies graph has?   "
+    ;
+    int v_num; cin >> v_num;
+    cout << "Are verticies in the graph weighted? y/n\n   ";
+    string weight; cin >> weight;
+
+    Graph gr;
+
+    if (weight == "y"){
+        gr = Graph(v_num, true);
+        gr.type |= Weighted;
+        cout << "Please enter weights for all verticies:\n";
+        for (u_short i = 0; i < v_num; i++)
+        {
+            cout << "   " << char(97+i) << "    ";
+            u_short w; cin >> w;
+            gr.setVWeight(i+1,w);
+        }
+        
+    } else {
+        gr = Graph (v_num);
+    }
+
+
+    cout 
+    << "\nTo add edges type: e vertex_number vertex_number\n"
+    << "To add undirected edge type: u vertex_number vertex_number\n"
+    << "To complete graph creation type: finish\n"
+    ;
+
+    while(true){
+        string response, a, b; cin >> response; 
+        
+        if(response.find("finish")!=string::npos){
+            break;
+        }  
+        cin >> a >> b;
+        if (response=="e"){
+            int i = stoi(a); int j = stoi(b);
+            gr.addEdge(i,j);
+        } else if (response=="u")
+        {
+            int i = stoi(a); int j = stoi(b);
+            gr.addUndirectedEdge(i,j);
+        }else{
+            cout << "Malfunction of input";
+        }
+        
+        
+    }
             in.SetGraph(gr);
         
     in.Write("test");
@@ -147,5 +185,8 @@ void Executor(){
     IALGFM* algo = new BuildConnectedness();
     auto ans = algo->ExecuteAlgorithm(&in);
     cout
-    << ans << "\n";
+    << "\n--------------------\n"
+    << ans
+    << "--------------------\n\n"
+    ;
 }
