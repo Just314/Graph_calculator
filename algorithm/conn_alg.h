@@ -10,7 +10,7 @@ class Connectedness_check : public IAlg{
         
     public:
         Connectedness_check(){}
-        void Calculate();
+        std::string Calculate();
         void Initialize(Graph* g);
 };
 

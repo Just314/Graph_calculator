@@ -5,7 +5,7 @@ class IAlg
 {   
 public:
    virtual ~IAlg(){}
-   virtual void Calculate() = 0;
+   virtual std::string Calculate() = 0;
    virtual void Initialize(Graph* g) = 0;
 };
 
