@@ -48,10 +48,13 @@ public:
     void addUndirectedEdge(u_short a, u_short b){addEdge(a,b);addEdge(b,a);}
 
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
-    std::pair<int,int> getEdge(int index){return edges[index];}
+    std::pair<u_short,u_short> getEdge(u_short index){return edges[index];}
     
-    std::vector<int> searchConnectionsOut(int v_num); //Search for all edges out of vertex[v_num];
-    std::vector<int> searchConnectionsIn(int v_num);  //Search for all edges into vertex[v_num];
+    std::vector<u_short> searchConnectionsOut(u_short v_num); //Search for all edges out of vertex[v_num];
+    std::vector<u_short> searchConnectionsIn(u_short v_num);  //Search for all edges into vertex[v_num];
+
+    std::vector<u_short> searchVertexConnectionsOut(u_short v_num); //Search for all vertices to which there is an edge out of vertex[v_num];
+    std::vector<u_short> searchVertexConnectionsIn(u_short v_num);  //Search for all vertices from which there is an edge into vertex[v_num];
 };
 
 

@@ -1,7 +1,7 @@
 #include "graph_io.h"
 
 using namespace std;
-
+typedef unsigned short int ushort;
 /*
 
 // Reserved code for unix/win separate filepath delimiter definition

@@ -1,40 +1,28 @@
-#include <bits/stdc++.h> 
 #include "conn_alg.h"
-
 using namespace std; 
-int n, a, counter = 0;
-vector <int> adj[101];
-bool visited[101];
+u_short counter = 0;
 
-void dfs(int s) {
+void Connectedness_check::Depth_Fist_Search(u_short s) {
     if (visited[s]) return;
-    counter++;
+    counter++;;
+    vector <u_short> neighbors = g->searchVertexConnectionsOut(s);
     visited[s] = true;
-    for (auto u: adj[s]) {
-    	dfs(u);
+    for (auto u: neighbors) {
+    	Depth_Fist_Search(u);
     }
 }
 
 void Connectedness_check::Initialize(Graph* g){}
 
 string Connectedness_check::Calculate() {
-    while (cin >> n) {
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                cin >> a;
-                if (a >= 1 && i != j) {
-                    adj[i].push_back(j);
-                }
-            }
-        }
-        dfs(1);
-        if (counter == n) {
-            cout << "YES\n";
-        }
-        else {
-            cout << "NO\n";
-        }
-        memset(visited, false, sizeof visited);
-        memset(adj, 0,sizeof adj);
+    string Is_Connected;
+    visited.assign(cardinal+1, false);
+    Depth_Fist_Search(1);
+    if (counter == cardinal) {
+        Is_Connected = "Graph is connected.\n";
     }
+    else {
+        Is_Connected = "Graph is not connected.\n";
+    }
+    return Is_Connected;
 }
