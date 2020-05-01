@@ -81,13 +81,19 @@ void CreateGraph(){
     string name; cin >> name;
     Graph_io in = Graph_io(name);
         Graph gr = Graph(4,true);
+            gr.type |= Weighted;
+            gr.type |= MultiGraph;
+            gr.type |= Complete;
             gr.setVWeight(5,1);
             gr.setVWeight(4,2);
             gr.setVWeight(3,3);
             gr.setVWeight(1,4);
-            gr.addEdge(1,2);
-            gr.addEdge(2,3);
-            gr.addEdge(4,1);
+            gr.addUndirectedEdge(1,2);
+            gr.addUndirectedEdge(1,3);
+            gr.addUndirectedEdge(1,4);
+            gr.addUndirectedEdge(2,3);
+            gr.addUndirectedEdge(3,4);
+            gr.addUndirectedEdge(2,4);
             in.SetGraph(gr);
         
     in.Write("test");

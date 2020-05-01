@@ -14,6 +14,7 @@ Graph::Graph(u_short v, bool weighted){
         vector<u_short> PWeights (verticies_num, 0);
         vertecies_W = PWeights;
     } 
+    type = Empty;
 }
 
 void Graph::addEdge(u_short first, u_short second){

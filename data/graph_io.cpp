@@ -103,6 +103,9 @@ std::istream & binary_read(std::istream& stream, T& value){
 void Graph_io::Write(string data){
     Create();
     file.seekp(0);
+
+    file.write((char*)&g.type,sizeof(GraphClassify));
+
     u_short vcount = g.getVertCount();
     u_short ecount = g.getEdgesCount();
 
@@ -141,6 +144,11 @@ void Graph_io::Write(string data){
 Graph* Graph_io::Read(){
     Open();
     u_short vnum, enums; bool hvw,hew;
+
+    GraphClassify meta;
+
+    file.read((char*)&meta, sizeof(meta));
+
     file.read((char*)&vnum,sizeof(u_short));
     file.read((char*)&enums,sizeof(u_short));
     file.read((char*)&hvw,sizeof(bool));
