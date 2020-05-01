@@ -17,7 +17,7 @@ void dfs(int s) {
 
 void Connectedness_check::Initialize(Graph* g){}
 
-void Connectedness_check::Calculate() {
+string Connectedness_check::Calculate() {
     while (cin >> n) {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {

@@ -1,22 +1,53 @@
 #include "graph_io.h"
 
-
 using namespace std;
+
+/*
+
+// Reserved code for unix/win separate filepath delimiter definition
+
+#ifdef __unix__
+
+const string OTHER_FOLDER = "/";
+const string EXAMPLES_FOLDER = "examples/";
+
+#endif
+
+#if defined(_WIN32) || defined(_WIN64)
+
+const string OTHER_FOLDER = "\\";
+const string EXAMPLES_FOLDER = "examples\\";
+
+#endif*/
+
+//Default file dilimmiter
+const string OTHER_FOLDER = "/";
+
+//Default file search folder
+const string EXAMPLES_FOLDER = "examples/";
 
 Graph_io::Graph_io(string name){ 
 
+    //Check .ag extension
     if (name.find(FILE_EXTENSION)==std::string::npos){
         string dilimiter = ".";
         if (name.find(dilimiter)!= std::string::npos){
-            name = name.substr(0,name.find(dilimiter));
+            name = name.substr(1,name.find(dilimiter));
 
         }
         name.append(FILE_EXTENSION);
     }
+
+    //Check folder
+    if (name.find(OTHER_FOLDER)==std::string::npos){
+        name = EXAMPLES_FOLDER+name;
+    }
+
     st = Waiting;
     file_name = name; 
 }
 
+//Custom exception for Corrupted binary files
 class InadequateFile: public exception
 {
     const char* what() const throw(){
@@ -24,6 +55,7 @@ class InadequateFile: public exception
     }
 };
 
+//Open file for read
 void Graph_io::Open(){
     try
     {
@@ -38,20 +70,24 @@ void Graph_io::Open(){
     }
 }
 
+//Create new file if does not exist or open if exist
 void Graph_io::Create(){
     file.open(file_name, ios::out | ios::binary);
     file.close();
     file.open(file_name, ios::out | ios::in | ios::binary);
 }
 
+//Closing shortcut
 void Graph_io::Close(){
     file.close();
 }
 
+//Initialise pointer to a provided for write Graph*
 void Graph_io::SetGraph(Graph setted){
     g = setted;
 }
 
+// NO IN USE ANY MORE!!!!!! Kept for reserve
 template<typename T>
 std::ostream& binary_write(std::ostream& stream, const T& value){
     return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
@@ -61,6 +97,8 @@ template<typename T>
 std::istream & binary_read(std::istream& stream, T& value){
     return stream.read(reinterpret_cast<char*>(&value), sizeof(T));
 }
+// END OF FALLBACK CODE
+
 
 void Graph_io::Write(string data){
     Create();
@@ -80,13 +118,7 @@ void Graph_io::Write(string data){
         file.write((char*)&ed.first,sizeof(u_short));
         file.write((char*)&ed.second,sizeof(u_short));
     }
-    /*u_short nums = 5;
-    u_short data2[5]{1,2,3,4,5};
-    
-    file.seekp(0);
-    file.write(reinterpret_cast<const char*>(&nums),sizeof(nums));
-    for (u_short i = 0; i < nums; i++)
-        file.write((char*)&data2[i],sizeof(data2[i]));*/
+   
 
     Close();
 }
@@ -109,11 +141,6 @@ Graph* Graph_io::Read(){
     }
     
 
-    /*u_short nums;
-    file.read(reinterpret_cast<char*>(&nums),sizeof(nums));
-    u_short data[nums];
-    for (u_short i =0; i < nums;i++)
-        file.read((char*)&data[i],sizeof(u_short));*/
     Close();
     return gr;
 }
