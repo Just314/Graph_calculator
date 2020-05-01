@@ -12,7 +12,10 @@ void Connectedness_check::Depth_Fist_Search(u_short s) {
     }
 }
 
-void Connectedness_check::Initialize(Graph* g){}
+void Connectedness_check::Initialize(Graph* g_in){
+    this->g = g_in;
+    cardinal =  g->getVertCount();
+}
 
 string Connectedness_check::Calculate() {
     string Is_Connected;

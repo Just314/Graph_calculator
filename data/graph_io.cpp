@@ -2,6 +2,7 @@
 
 using namespace std;
 typedef unsigned short int ushort;
+typedef unsigned short int u_int16_t;
 /*
 
 // Reserved code for unix/win separate filepath delimiter definition

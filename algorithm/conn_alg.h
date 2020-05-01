@@ -7,7 +7,7 @@
 class Connectedness_check : public IAlg{
     private:
         Graph *g;
-        u_short cardinal =  g->getVertCount();
+        u_short cardinal;
         std::vector<bool> visited;
     public:
         Connectedness_check(){}
