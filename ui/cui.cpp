@@ -80,7 +80,11 @@ void CreateGraph(){
     << "Please enter the name of the file: ";
     string name; cin >> name;
     Graph_io in = Graph_io(name);
-        Graph gr = Graph(4);
+        Graph gr = Graph(4,true);
+            gr.setVWeight(5,1);
+            gr.setVWeight(4,2);
+            gr.setVWeight(3,3);
+            gr.setVWeight(1,4);
             gr.addEdge(1,2);
             gr.addEdge(2,3);
             gr.addEdge(4,1);
@@ -107,6 +111,19 @@ void DisplayGraph(){
     <<"Number of edeges: " << g->getEdgesCount()<< "\n"
     <<"Adjacency Matrix: \n\n"
     <<g->MatrixToString()
+    ;
+
+    if(g->hasVW()){
+        cout 
+        << "Vertecies Weights:\n"
+        ;
+        for(u_short i = 0;i<g->getVertCount();i++){
+            cout 
+            << char(97+i) << " " << g->getVWeigth(i) << "\n"
+            ;
+        }
+    }
+    cout 
     <<"--------------------\n\n"
     ;
 }

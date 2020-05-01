@@ -2,12 +2,17 @@
 
 using namespace std;
 
-Graph::Graph(u_short v){
+Graph::Graph(u_short v, bool weighted){
     verticies_num = v;
     adj = new u_short* [v]; 
     for (u_short i=0; i < v; i++)  { 
         adj[i] = new u_short[v]; 
         memset(adj[i], 0, v*sizeof(u_short)); 
+    } 
+
+    if (weighted){
+        vector<u_short> PWeights (verticies_num, 0);
+        vertecies_W = PWeights;
     } 
 }
 

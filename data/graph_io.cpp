@@ -113,6 +113,21 @@ void Graph_io::Write(string data){
     file.write((char*)&hvw,sizeof(bool));
     file.write((char*)&hew,sizeof(bool));
     
+
+    if(hvw){
+        for (u_short i =0; i<vcount;i++){
+            auto w = g.getVWeigth(i);
+            file.write((char*)&w,sizeof(u_short));
+        }
+    }
+
+    if(hew){
+        for(u_short i =0;i<ecount;i++){
+            auto w = g.getEWeight(i);
+            file.write((char*)&w,sizeof(u_short));
+        }
+    }
+
     for(u_short i =0; i<ecount;i++){
         auto ed = g.getEdge(i);
         file.write((char*)&ed.first,sizeof(u_short));
@@ -132,6 +147,26 @@ Graph* Graph_io::Read(){
     file.read((char*)&hew,sizeof(bool));
 
     Graph* gr = new Graph(vnum);
+
+    if(hvw){
+        for (u_short i = 0; i < vnum; i++)
+        {
+            ushort temp;
+            file.read((char*)&temp,sizeof(u_short));
+            gr->addVWeight(temp);
+        }
+    }
+
+    if(hew){
+        for (u_short i = 0; i < enums; i++)
+        {
+            ushort temp;
+            file.read((char*)&temp,sizeof(u_short));
+            gr->addEWeight(temp);
+        }
+    }
+
+
     for (u_short i = 0; i < enums; i++)
     {
         u_short a,b;
