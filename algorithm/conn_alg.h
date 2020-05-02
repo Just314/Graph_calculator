@@ -9,6 +9,7 @@ class Connectedness_check : public IAlg{
         u_short cardinal;
         std::vector<bool> visitedOut;
         u_short counterOut;
+        u_short counterUnd;
         std::vector<bool> visitedIn;
         u_short counterIn;
         bool strongly_connected;
@@ -18,8 +19,11 @@ class Connectedness_check : public IAlg{
         Connectedness_check(){}
         std::string Calculate();
         void Initialize(Graph* g);
+
+        void Depth_Fist_SearchUnderlying(u_short s);
         void Depth_Fist_SearchOut(u_short s);
         void Depth_Fist_SearchIn(u_short s);
+
         bool Is_Strongly_Connected() {return strongly_connected;}
         bool Is_Weakly_Connected() {return weakly_connected;}
 };
