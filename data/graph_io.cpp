@@ -48,27 +48,13 @@ Graph_io::Graph_io(string name){
     file_name = name; 
 }
 
-//Custom exception for Corrupted binary files
-class InadequateFile: public exception
-{
-    const char* what() const throw(){
-        return "File does not exist or is corrupted";
-    }
-};
 
 //Open file for read
 void Graph_io::Open(){
-    try
-    {
-        file.open(file_name, ios::out | ios::in | ios::binary);
-        if (file.fail()){
-            throw  InadequateFile();
-         }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    file.open(file_name, ios::out | ios::in | ios::binary);
+    if (file.fail()){
+        throw  InadequateFile();
+    }  
 }
 
 //Create new file if does not exist or open if exist

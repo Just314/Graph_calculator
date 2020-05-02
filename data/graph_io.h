@@ -25,5 +25,12 @@ public:
     void Create();
 };
 
+//Custom exception for Corrupted binary files
+class InadequateFile: public std::exception {
+    public :
+        const char* what() const throw(){
+            return "File does not exist or is corrupted";
+        }
+};
 
 #endif
