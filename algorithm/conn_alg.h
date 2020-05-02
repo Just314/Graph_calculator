@@ -8,6 +8,7 @@ class Connectedness_check : public IAlg{
         Graph *g;
         u_short cardinal;
         std::vector<bool> visited;
+        u_short counter;
     public:
         Connectedness_check(){}
         std::string Calculate();
