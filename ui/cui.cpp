@@ -176,13 +176,37 @@ void DisplayGraph(){
 }
 
 void Executor(){
+
+
+    IALGFM* algo;
+
+    while (true)
+    {
+        cout
+        <<  "Please pick the algorithm:\n"
+        <<  "   Connectedness\n"
+        <<  "   Euler path\n"
+        ;
+        string pick; cin >> pick;
+        
+        if (pick.find("onnected")!=string::npos){
+            algo = new BuildConnectedness();
+            break;
+        } else if( pick.find("uler")!=string::npos){
+            algo = new CheckEuler();
+            break;
+        }else{
+            cout 
+            << "Please enter valid algorithm name\n";
+        }
+    }
+
     cout 
     << "Please enter the name of the file: "
     ;
     string name; cin >> name;
     Graph_io in = Graph_io(name);
 
-    IALGFM* algo = new BuildConnectedness();
     auto ans = algo->ExecuteAlgorithm(&in);
     cout
     << "\n--------------------\n"

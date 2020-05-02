@@ -1,5 +1,5 @@
-output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o
-	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o -o output
+output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o
+	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o -o output
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -18,6 +18,9 @@ alg_fac_meth.o: ./algorithm/alg_fac_meth.cpp ./algorithm/alg_fac_meth.h ./algori
 
 conn_alg.o: ./algorithm/conn_alg.cpp ./algorithm/conn_alg.h ./algorithm/alg.h
 	g++ -c ./algorithm/conn_alg.cpp
+
+euler.o: ./algorithm/euler.cpp ./algorithm/euler.h ./algorithm/alg.h
+	g++ -c ./algorithm/euler.cpp
 
 clean:
 	rm *.o output

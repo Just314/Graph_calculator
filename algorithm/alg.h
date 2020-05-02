@@ -1,5 +1,7 @@
 #ifndef ALG_BASIS_H
 #define ALG_BASIS_H
+#include <bits/stdc++.h>
+#include "../data/graph.h"
 
 class IAlg
 {   
