@@ -9,7 +9,11 @@ Graph::Graph(u_short v, bool weighted){
         adj[i] = new u_short[v]; 
         memset(adj[i], 0, v*sizeof(u_short)); 
     } 
-
+    adj_underlying = new u_short* [v]; 
+    for (u_short i=0; i < v; i++)  { 
+        adj_underlying[i] = new u_short[v]; 
+        memset(adj_underlying[i], 0, v*sizeof(u_short)); 
+    } 
     if (weighted){
         vector<u_short> PWeights (verticies_num, 0);
         vertecies_W = PWeights;
@@ -20,6 +24,8 @@ Graph::Graph(u_short v, bool weighted){
 void Graph::addEdge(u_short first, u_short second){
     edges.push_back(pair<u_short,u_short>(first,second));
     adj[first-1][second-1]++;
+    adj_underlying[first-1][second-1]++;
+    adj_underlying[first-1][second-1]++;
 }
 
 std::vector<u_short> Graph::searchConnectionsOut(u_short v_num){

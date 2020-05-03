@@ -1,100 +1,102 @@
 #include "euler.h"
 using namespace std;
 
-bool EulerAlgo::HasEulerianCycle() {
-    if (!ISConnected()) {
-        return false;
-    }
-    for (u_short i = 1; i <= cardinality; i++) {
-        if (adjacencylistout[i].size() != adjacencylistinto[i].size()) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool EulerAlgo::ISConnected() {
-    bool visited[cardinality+1];
-    memset(visited, false, sizeof(visited));
-    u_short firstnonzero;
-    for (firstnonzero = 1; firstnonzero <= cardinality; firstnonzero++) {
-        if (!adjacencylistout[firstnonzero].empty()) {
-            break;
-        }
-    }
-    DFS(firstnonzero, visited);
-    for (u_short i = 1; i <= cardinality; i++) {
-        if (!adjacencylistout[firstnonzero].empty() && !visited[i]) {
-            return false;
-        }
-    }
-    transpose = true;    
-    memset(visited, false, sizeof(visited));
-    DFS(firstnonzero, visited);
-    for (u_short i = 1; i <= cardinality; i++) {
-        if (!adjacencylistout[firstnonzero].empty() && !visited[i]) {
-            return false;
-        }
-    } 
-    return true;
-}
-
-void EulerAlgo::DFS(u_short nonzero, bool *was) {
-    was[nonzero] = true;
-    if (!transpose) {
-        vector<u_short> temp = adjacencylistout[nonzero];
-        for (auto u : temp) {
-            if (!was[u]) {
-                DFS(u, was);
-            }
-        }
-    }
-    else {
-        vector<u_short> temp = adjacencylistinto[nonzero];
-        for (auto u : temp) {
-            if (!was[u]) {
-                DFS(u, was);
-            }
-        }
-    }
-}
-
-void EulerAlgo::DFSTranspose(u_short nonzero, bool *was) {
-    was[nonzero] = true;
-    vector<u_short> temp = adjacencylistinto[nonzero];
-    for (auto u : temp) {
-        if (!was[u]) {
-            DFSTranspose(u, was);
-        }
-    }
-}
-
-
 
 void EulerAlgo::Initialize(Graph* g_in){
     g = g_in;
-    transpose = false;
     cardinality = g->getVertCount();
-    adjacencylistout.resize(cardinality+1);
-    adjacencylistinto.resize(cardinality+1);
-    for (u_short i = 1; i <= cardinality; i++) {
-        vector <u_short> outofvertexi = g->searchVertexConnectionsOut(i);
-        adjacencylistout.insert(adjacencylistout.begin()+i,outofvertexi);
-    }
-    for (u_short i = 1; i <= cardinality; i++) {
-        vector <u_short> intovertexi = g->searchVertexConnectionsIn(i);
-        adjacencylistinto.insert(adjacencylistinto.begin()+i,intovertexi);
-    }
+    adjac = g->Matrix();
 }
 
-
 std::string EulerAlgo::Calculate(){
-    string Eulerian;
-    if (HasEulerianCycle()) {
-        Eulerian = "Graph is Eulerian.\n";
+    string ISEulerian;
+    vector <vector <u_short>> adjacency;
+    for (u_short i = 0; i < cardinality; i++) {
+        vector <u_short> temp;
+        for (u_short j = 0; j < cardinality; j++) {
+            temp.insert(temp.begin()+j, adjac[i][j]);
+        }
+        adjacency.insert(adjacency.begin()+i, temp);
     }
-    else {
-        Eulerian = "Graph is not Eulerian.\n";
+    vector <u_short> deg (cardinality);
+    for (u_short i=0; i < cardinality; ++i) {
+        for (u_short j = 0; j < cardinality; ++j) {
+            deg[i] += adjacency[i][j];
+        }
     }
-    return Eulerian;
+    u_short first = 0;
+    while (!deg[first]) {
+        ++first;
+    }
+    int v1 = -1, v2 = -1;
+    bool bad = false;
+    for (u_short i = 0; i < cardinality; ++i) {
+        if (deg[i] & 1) {
+            if (v1 == -1) {
+                v1 = i;
+            }
+            else if (v2 == -1) {
+                v1 = i;
+            }
+            else {
+                bad = true;
+            }
+        }
+    }
+    if (v1 != -1) {
+        ++adjacency[v1][v2];
+        ++adjacency[v2][v1];
+    }
+	stack<u_short> st;
+	st.push (first);
+    vector<u_short> res;
+    while (!st.empty()) {
+		u_short v = st.top();
+		u_short i;
+		for (i=0; i < cardinality; ++i) {
+            if (adjacency[v][i]){
+                break;
+            }
+        }
+		if (i == cardinality) {
+			res.push_back (v);
+			st.pop();
+		}
+		else {
+			--adjacency[v][i];
+			--adjacency[i][v];
+			st.push (i);
+		}
+	}
+    if (v1 != -1) {
+        for (size_t i=0; i+1<res.size(); ++i) {
+            if (res[i] == v1 && res[i+1] == v2 || res[i] == v2 && res[i+1] == v1) {
+				vector<u_short> res2;
+				for (size_t j=i+1; j<res.size(); ++j)
+					res2.push_back (res[j]);
+				for (size_t j=1; j<=i; ++j)
+					res2.push_back (res[j]);
+				res = res2;
+				break;
+			}
+        }
+    }
+    for (u_short i = 0; i < cardinality; ++i)
+		for (int j = 0; j < cardinality; ++j)
+			if (adjacency[i][j])
+				bad = true;
+    
+    if (bad) {
+		ISEulerian = "Graph is not Eulerian";
+    }
+	else {
+        ISEulerian = "Graph is Eulerian. Path is: ";
+        for (size_t i=0; i<res.size(); ++i) {
+            ISEulerian += to_string(res[i]+1);
+            ISEulerian += " ";
+        }
+        ISEulerian += "\n";
+    }
+
+    return ISEulerian;
 }

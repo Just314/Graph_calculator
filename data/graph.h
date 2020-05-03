@@ -26,6 +26,7 @@ private:
     std::vector<std::pair<u_short,u_short>> edges;
     std::vector<u_short> edges_W;
     u_short **adj;
+    u_short **adj_underlying;
 public:
     Graph(u_short v, bool weighted=false);
     Graph(){};
@@ -36,6 +37,7 @@ public:
     u_short getVertCount(){return verticies_num;}
     bool hasVW(){return vertecies_W.size()>0;}
     bool hasEW(){return edges_W.size()>0;}
+    u_short **Matrix() {return adj_underlying;}
     std::string MatrixToString(); 
     
     u_short getVWeigth(u_short index){return vertecies_W[index];}
