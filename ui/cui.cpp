@@ -207,8 +207,8 @@ void Executor(){
         <<  "   Connectedness\n"
         <<  "   Euler path\n"
         ;
-        string pick; cin >> pick;
-        
+        string pick; 
+        std::getline(std::cin >> std::ws, pick);
         if (pick.find("onnected")!=string::npos){
             algo = new BuildConnectedness();
             break;
