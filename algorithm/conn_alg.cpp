@@ -6,7 +6,6 @@ void Connectedness_check::Depth_Fist_SearchUnderlying(u_short s) {
     if (visitedOut[s]) return;
     counterUnd++;
     vector <u_short> neighborsout = g->searchVertexConnectionsOut(s);
-    vector <u_short> neighborsin = g->searchVertexConnectionsIn(s);
     visitedOut[s] = true;
     visitedIn[s] = true;
     if (!neighborsout.empty()) {
@@ -15,6 +14,7 @@ void Connectedness_check::Depth_Fist_SearchUnderlying(u_short s) {
         }
     }
     else {
+        vector <u_short> neighborsin = g->searchVertexConnectionsIn(s);
         for (auto u: neighborsin) {
     	    Depth_Fist_SearchUnderlying(u);
         }
@@ -46,13 +46,13 @@ void Connectedness_check::Initialize(Graph* g_in){
     cardinal =  g->getVertCount();
     counterOut = 0;
     counterIn = 0;
-    counterUnd = 0;
+    counterUnd = 0;    
+    visitedOut.assign(cardinal+1, false);
+    visitedIn.assign(cardinal+1, false);
 }
 
 string Connectedness_check::Calculate() {
     string Is_Connected;
-    visitedOut.assign(cardinal+1, false);
-    visitedIn.assign(cardinal+1, false);
     Depth_Fist_SearchUnderlying(1);
     visitedIn.assign(cardinal+1, false);    
     visitedOut.assign(cardinal+1, false);
