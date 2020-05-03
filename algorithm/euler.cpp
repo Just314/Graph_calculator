@@ -36,62 +36,64 @@ std::string EulerAlgo::Calculate(){
                 v1 = i;
             }
             else if (v2 == -1) {
-                v1 = i;
+                v2 = i;
             }
             else {
                 bad = true;
             }
         }
     }
-    if (v1 != -1) {
-        ++adjacency[v1][v2];
-        ++adjacency[v2][v1];
-    }
-	stack<u_short> st;
-	st.push (first);
     vector<u_short> res;
-    while (!st.empty()) {
-		u_short v = st.top();
-		u_short i;
-		for (i=0; i < cardinality; ++i) {
-            if (adjacency[v][i]){
-                break;
+    if (!bad) {
+        if (v1 != -1) {
+            ++adjacency[v1][v2];
+            ++adjacency[v2][v1];
+        }
+	    stack<u_short> st;
+	    st.push (first);
+        while (!st.empty()) {
+		    u_short v = st.top();
+		    u_short i;
+		    for (i=0; i < cardinality; ++i) {
+                if (adjacency[v][i]){
+                    break;
+                }
+            }
+		    if (i == cardinality) {
+			    res.push_back (v);
+			    st.pop();
+		    }
+		    else {
+			    --adjacency[v][i];
+			    --adjacency[i][v];
+			    st.push (i);
+		    }
+	    }
+        if (v1 != -1) {
+            for (size_t i=0; i+1<res.size(); ++i) {
+                if (res[i] == v1 && res[i+1] == v2 || res[i] == v2 && res[i+1] == v1) {
+				    vector<u_short> res2;
+				    for (size_t j=i+1; j<res.size(); ++j)
+					    res2.push_back (res[j]);
+				    for (size_t j=1; j<=i; ++j)
+					    res2.push_back (res[j]);
+				    res = res2;
+				    break;
+			    }
             }
         }
-		if (i == cardinality) {
-			res.push_back (v);
-			st.pop();
-		}
-		else {
-			--adjacency[v][i];
-			--adjacency[i][v];
-			st.push (i);
-		}
-	}
-    if (v1 != -1) {
-        for (size_t i=0; i+1<res.size(); ++i) {
-            if (res[i] == v1 && res[i+1] == v2 || res[i] == v2 && res[i+1] == v1) {
-				vector<u_short> res2;
-				for (size_t j=i+1; j<res.size(); ++j)
-					res2.push_back (res[j]);
-				for (size_t j=1; j<=i; ++j)
-					res2.push_back (res[j]);
-				res = res2;
-				break;
-			}
-        }
+        for (u_short i = 0; i < cardinality; ++i)
+		    for (int j = 0; j < cardinality; ++j)
+			    if (adjacency[i][j])
+				    bad = true;
     }
-    for (u_short i = 0; i < cardinality; ++i)
-		for (int j = 0; j < cardinality; ++j)
-			if (adjacency[i][j])
-				bad = true;
-    
     if (bad) {
 		ISEulerian = "Graph is not Eulerian";
     }
 	else {
-        ISEulerian = "Graph is Eulerian. Path is: ";
+        ISEulerian = "Graph is Semi-Eulerian. Path is: ";
         for (size_t i=0; i<res.size(); ++i) {
+            if (res.front() == res.back()) ISEulerian = "Graph is Eulerian. Circuit is: ";
             ISEulerian += to_string(res[i]+1);
             ISEulerian += " ";
         }

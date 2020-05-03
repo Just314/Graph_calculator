@@ -37,7 +37,7 @@ public:
     u_short getVertCount(){return verticies_num;}
     bool hasVW(){return vertecies_W.size()>0;}
     bool hasEW(){return edges_W.size()>0;}
-    u_short **Matrix() {return adj_underlying;}
+    u_short **Matrix() {return adj;}
     std::string MatrixToString(); 
     
     u_short getVWeigth(u_short index){return vertecies_W[index];}
