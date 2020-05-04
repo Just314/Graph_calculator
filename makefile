@@ -1,6 +1,6 @@
 
-output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o
-	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o -o output
+output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o graph_alt.o
+	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o graph_alt.o -o output
 
 main.o: main.cpp
 	g++ -c -g main.cpp
@@ -25,6 +25,9 @@ euler.o: ./algorithm/euler.cpp ./algorithm/euler.h ./algorithm/alg.h
 
 warshall.o: ./algorithm/warshall.cpp ./algorithm/warshall.h ./algorithm/alg.h
 	g++ -c -g ./algorithm/warshall.cpp
+
+graph_alt.o: ./data/graph_alt.cpp ./data/graph_alt.h ./data/graph.h
+	g++ -c -g ./data/graph_alt.cpp
 
 clean:
 	rm *.o output

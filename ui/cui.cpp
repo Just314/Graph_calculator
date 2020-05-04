@@ -14,6 +14,7 @@ void CreateGraph();
 void DisplayGraph();
 CalcCommand CheckMode();
 void Executor();
+void AltRead();
 
 void Cui::welcome()
 {
@@ -39,7 +40,7 @@ void Cui::loop(){
             Executor();
             break;
         case ReadGraph:
-            DisplayGraph();
+            AltRead();
             break;
         case Terminate:
             return;
@@ -254,5 +255,41 @@ void Executor(){
     << "\n--------------------\n"
     << ans
     << "--------------------\n\n"
+    ;
+}
+
+void AltRead(){
+    Alt_Graph* g;
+
+    while (true)
+    {
+        std::cout
+        << "Please enter the name of the file: ";
+        string name; cin >> name;
+        Graph_io in = Graph_io(name);
+        try
+        {
+            g = in.Read_alt();
+        }
+        catch(InadequateFile e){
+            std::cerr << e.what() << '\n';
+            cout << "Please enter valid name of the file\n";
+            continue;
+        }
+        break;
+        
+    }
+    
+    
+    std::cout
+    << g->PrintMeta()
+    <<"Number of vertecies: " << g->getVertCount() << "\n"
+    <<"Number of edeges: " << g->getEdgesCount()<< "\n"
+    <<"Adjacency Matrix: \n\n"
+    <<g->MatrixToString()
+    ;
+
+    std::cout 
+    <<"--------------------\n\n"
     ;
 }
