@@ -50,7 +50,7 @@ public:
     void addUndirectedEdge(u_short a, u_short b){addEdge(a,b);addEdge(b,a);}
     void addWeightedEdge(u_short a, u_short b, u_short w) {addEdge(a,b); addEdge(b,a); addWeight(a, b, w);}
     void addWeight(u_short a, u_short b, u_short w);
-
+    void setAWeight(u_short i, u_short j, u_short val){adj_weighted[i][j]=val;}
  
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
     std::pair<u_short,u_short> getEdge(u_short index){return edges[index];}
