@@ -30,7 +30,7 @@ void Graph::addEdge(u_short first, u_short second){
 }
 
 void Graph::addWeight(u_short a, u_short b, u_short w) {
-    if (adj_weighted == 0 && a!= b) {
+    if (adj_weighted[a-1][b-1] == 0 && a!= b) {
         adj_weighted[a-1][b-1] = w;
         adj_weighted[b-1][a-1] = w;
     }

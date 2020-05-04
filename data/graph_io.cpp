@@ -125,6 +125,19 @@ void Graph_io::Write(string data){
         file.write((char*)&ed.second,sizeof(u_short));
     }
    
+    if(hvw){
+        auto adj = g.MatrixWeighted();
+        for (u_short i = 0; i < vcount; i++)
+        {
+            for (u_short j = 0; j < vcount; j++)
+            {
+                file.write((char*)&adj[i][j],sizeof(adj[0][0]));
+            }
+            
+        }
+        
+    }
+
 
     Close();
 }
@@ -171,6 +184,21 @@ Graph* Graph_io::Read(){
         gr->addEdge(a,b);
     }
     
+    if (hvw){
+        for (u_short i = 0; i < vnum; i++)
+        {
+            for (u_short j = 0; j < vnum; j++)
+            {
+                u_short temp;
+                file.read((char*)&temp,sizeof(temp));
+                gr->setAWeight(i,j,temp);
+            }
+            
+        }
+        
+    }
+
+
     gr->type = static_cast<GraphClassify> (meta);
 
     Close();

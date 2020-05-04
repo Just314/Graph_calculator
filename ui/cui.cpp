@@ -98,13 +98,7 @@ void CreateGraph(){
     if (weight == "y"){
         gr = Graph(v_num, true);
         gr.type |= Weighted;
-        std::cout << "Please enter weights for all verticies:\n";
-        for (u_short i = 0; i < v_num; i++)
-        {
-            std::cout << "   " << char(97+i) << "    ";
-            u_short w; cin >> w;
-            gr.setVWeight(i+1,w);
-        }
+        gr.addVWeight(1);
         
     } else {
         gr = Graph (v_num);
@@ -196,9 +190,23 @@ void DisplayGraph(){
             ;
         }
     }
+
+    auto adj = g->MatrixWeighted();
+    for (int i = 0; i < g->getVertCount(); i++)
+    {
+        for (int j = 0; j < g->getVertCount(); j++)
+        {
+            cout << adj[i][j] <<" ";
+        }
+        cout << "\n";
+    }
+    
     std::cout 
     <<"--------------------\n\n"
     ;
+
+    
+    
 }
 
 void Executor(){
