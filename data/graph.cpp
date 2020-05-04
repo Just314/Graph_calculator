@@ -9,6 +9,11 @@ Graph::Graph(u_short v, bool weighted){
         adj[i] = new u_short[v]; 
         memset(adj[i], 0, v*sizeof(u_short)); 
     } 
+    adj_weighted = new u_short* [v]; 
+    for (u_short i=0; i < v; i++)  { 
+        adj_weighted[i] = new u_short[v]; 
+        memset(adj_weighted[i], 0, v*sizeof(u_short)); 
+    } 
     if (weighted){
         vector<u_short> PWeights (verticies_num, 0);
         vertecies_W = PWeights;
@@ -21,6 +26,17 @@ void Graph::addEdge(u_short first, u_short second){
     adj[first-1][second-1]++;
     if (first == second) {
         adj[first-1][second-1]++;;
+    }
+}
+
+void Graph::addWeight(u_short a, u_short b, u_short w) {
+    if (adj_weighted == 0 && a!= b) {
+        adj_weighted[a-1][b-1] = w;
+        adj_weighted[b-1][a-1] = w;
+    }
+    else if (w < adj_weighted[a-1][b-1] && a != b) {
+        adj_weighted[a-1][b-1] = w;
+        adj_weighted[b-1][a-1] = w;
     }
 }
 

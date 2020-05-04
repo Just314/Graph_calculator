@@ -114,11 +114,12 @@ void CreateGraph(){
     std::cout 
     << "\nTo add edges type: e vertex_number vertex_number\n"
     << "To add undirected edge type: u vertex_number vertex_number\n"
+    << "To  add weigthed edge type: w vertex_number vertex_number weight\n"
     << "To complete graph creation type: finish\n"
     ;
 
     while(true){
-        string response, a, b; cin >> response; 
+        string response, a, b, w; cin >> response; 
         
         if(response.find("finish")!=string::npos){
             break;
@@ -131,7 +132,12 @@ void CreateGraph(){
         {
             int i = stoi(a); int j = stoi(b);
             gr.addUndirectedEdge(i,j);
-        }else{
+        }  else if (response=="w") {
+            cin >> w;
+            int i = stoi(a); int j = stoi(b); int k = stoi(w);
+            gr.addWeightedEdge(i,j,k);
+        }
+        else{
             std::cout << "Malfunction of input";
         }
         
@@ -206,6 +212,7 @@ void Executor(){
         <<  "Please pick the algorithm:\n"
         <<  "   Connectedness\n"
         <<  "   Euler path\n"
+        <<  "   Shortest path\n"
         ;
         string pick; 
         std::getline(std::cin >> std::ws, pick);
@@ -215,7 +222,10 @@ void Executor(){
         } else if( pick.find("uler")!=string::npos){
             algo = new CheckEuler();
             break;
-        }else{
+        } else if( pick.find("hortest")!=string::npos){
+            algo = new ShortestPath();
+            break;
+        } else{
             std::cout 
             << "Please enter valid algorithm name\n";
         }

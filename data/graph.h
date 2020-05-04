@@ -26,7 +26,7 @@ private:
     std::vector<std::pair<u_short,u_short>> edges;
     std::vector<u_short> edges_W;
     u_short **adj;
-    u_short **adj_underlying;
+    u_short **adj_weighted;
 public:
     Graph(u_short v, bool weighted=false);
     Graph(){};
@@ -38,8 +38,8 @@ public:
     bool hasVW(){return vertecies_W.size()>0;}
     bool hasEW(){return edges_W.size()>0;}
     u_short **Matrix() {return adj;}
+    u_short **MatrixWeighted() {return adj_weighted;}
     std::string MatrixToString(); 
-    
     u_short getVWeigth(u_short index){return vertecies_W[index];}
     u_short getEWeight(u_short index){return edges_W[index];}
 
@@ -48,7 +48,10 @@ public:
 
     void setVWeight(u_short w, u_short index){vertecies_W[index-1]=w;}
     void addUndirectedEdge(u_short a, u_short b){addEdge(a,b);addEdge(b,a);}
+    void addWeightedEdge(u_short a, u_short b, u_short w) {addEdge(a,b); addEdge(b,a); addWeight(a, b, w);}
+    void addWeight(u_short a, u_short b, u_short w);
 
+ 
     std::vector<std::pair<u_short,u_short>> getAllEdges(){return edges;}
     std::pair<u_short,u_short> getEdge(u_short index){return edges[index];}
     

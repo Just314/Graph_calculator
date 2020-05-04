@@ -5,6 +5,7 @@
 #include "alg.h"
 #include "conn_alg.h"
 #include "euler.h"
+#include "warshall.h"
 
 class IALGFM
 {
@@ -21,10 +22,18 @@ class BuildConnectedness: public IALGFM{
         }
 };
 
-class CheckEuler : public IALGFM{
+class CheckEuler: public IALGFM{
     public:
     IAlg* FactoryMethod() override{
         return new EulerAlgo();
+    }
+};
+
+
+class ShortestPath: public IALGFM{
+    public:
+    IAlg* FactoryMethod() override{
+        return new WarshallAlgo();
     }
 };
 
