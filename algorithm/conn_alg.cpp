@@ -11,9 +11,7 @@ void Connectedness_check::Depth_Fist_SearchUnderlying(u_short s) {
         if (adjacency[s][u] > 0) {
     	Depth_Fist_SearchUnderlying(u);
         }
-    }
-    for (u_short u = 0; u < cardinal; u++) {
-        if (adjacency[u][s] > 0) {
+        else if (adjacency[u][s] > 0) {
     	    Depth_Fist_SearchUnderlying(u);
         }
     }
