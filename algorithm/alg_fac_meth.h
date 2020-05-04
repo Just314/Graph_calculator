@@ -6,6 +6,7 @@
 #include "conn_alg.h"
 #include "euler.h"
 #include "warshall.h"
+#include "hamilton.h"
 
 class IALGFM
 {
@@ -34,6 +35,13 @@ class ShortestPath: public IALGFM{
     public:
     IAlg* FactoryMethod() override{
         return new WarshallAlgo();
+    }
+};
+
+class Hamiltonian: public IALGFM{
+    public:
+    IAlg* FactoryMethod() override{
+        return new HamiltonAlgo();
     }
 };
 

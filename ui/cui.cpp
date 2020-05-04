@@ -213,6 +213,7 @@ void Executor(){
         <<  "   Connectedness\n"
         <<  "   Euler path\n"
         <<  "   Shortest path\n"
+        <<  "   Hamiltonian path\n"
         ;
         string pick; 
         std::getline(std::cin >> std::ws, pick);
@@ -224,6 +225,9 @@ void Executor(){
             break;
         } else if( pick.find("hortest")!=string::npos){
             algo = new ShortestPath();
+            break;
+        } else if( pick.find("amiltonian")!=string::npos){
+            algo = new Hamiltonian();
             break;
         } else{
             std::cout 
