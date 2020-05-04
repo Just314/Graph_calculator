@@ -9,7 +9,7 @@ class HamiltonAlgo : public IAlg{
         u_short cardinality;
         std::vector<bool> visited;
         std::vector<u_short> path;
-
+        bool ispath;
     public:
         HamiltonAlgo(){}
         std::string Calculate();
