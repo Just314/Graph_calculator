@@ -5,39 +5,39 @@ using namespace std;
 void Connectedness_check::Depth_Fist_SearchUnderlying(u_short s) {
     if (visitedOut[s]) return;
     counterUnd++;
-    vector <u_short> neighborsout = g->searchVertexConnectionsOut(s);
     visitedOut[s] = true;
     visitedIn[s] = true;
-    if (!neighborsout.empty()) {
-        for (auto u: neighborsout) {
+    for (u_short u = 0; u < cardinal; u++) {
+        if (adjacency[s][u] > 0) {
+    	Depth_Fist_SearchUnderlying(u);
+        }
+    }
+    for (u_short u = 0; u < cardinal; u++) {
+        if (adjacency[u][s] > 0) {
     	    Depth_Fist_SearchUnderlying(u);
         }
     }
-    else {
-        vector <u_short> neighborsin = g->searchVertexConnectionsIn(s);
-        for (auto u: neighborsin) {
-    	    Depth_Fist_SearchUnderlying(u);
-        }
-    } 
 }
 
 void Connectedness_check::Depth_Fist_SearchOut(u_short s) {
     if (visitedOut[s]) return;
     counterOut++;
-    vector <u_short> neighborsout = g->searchVertexConnectionsOut(s);
     visitedOut[s] = true;
-    for (auto u: neighborsout) {
-    	Depth_Fist_SearchOut(u);
+    for (u_short u = 0; u < cardinal; u++) {
+        if (adjacency[s][u] > 0) {
+    	    Depth_Fist_SearchOut(u);
+        }
     }
 }
 
 void Connectedness_check::Depth_Fist_SearchIn(u_short s) {
     if (visitedIn[s]) return;
     counterIn++;
-    vector <u_short> neighborsin = g->searchVertexConnectionsIn(s);
     visitedIn[s] = true;
-    for (auto u: neighborsin) {
-    	Depth_Fist_SearchIn(u);
+    for (u_short u = 0; u < cardinal; u++) {
+        if (adjacency[u][s] > 0) {
+    	    Depth_Fist_SearchIn(u);
+        }
     }
 }
 
@@ -46,19 +46,20 @@ void Connectedness_check::Initialize(Graph* g_in){
     cardinal =  g->getVertCount();
     counterOut = 0;
     counterIn = 0;
-    counterUnd = 0;    
-    visitedOut.assign(cardinal+1, false);
-    visitedIn.assign(cardinal+1, false);
+    counterUnd = 0;
+    adjacency = g->Matrix();   
+    visitedOut.assign(cardinal, false);
+    visitedIn.assign(cardinal, false);
 }
 
 string Connectedness_check::Calculate() {
     string Is_Connected;
-    Depth_Fist_SearchUnderlying(1);
-    visitedIn.assign(cardinal+1, false);    
-    visitedOut.assign(cardinal+1, false);
+    Depth_Fist_SearchUnderlying(0);
+    visitedIn.assign(cardinal, false);    
+    visitedOut.assign(cardinal, false);
     if (counterUnd == cardinal) {
-        Depth_Fist_SearchOut(1);
-        Depth_Fist_SearchIn(1);
+        Depth_Fist_SearchOut(0);
+        Depth_Fist_SearchIn(0);
         weakly_connected = true;        
         Is_Connected = "Graph is weakly connected.\n";
         if (counterOut == cardinal && counterIn == cardinal) {

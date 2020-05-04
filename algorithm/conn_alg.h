@@ -14,6 +14,7 @@ class Connectedness_check : public IAlg{
         u_short counterIn;
         bool strongly_connected;
         bool weakly_connected;
+        u_short **adjacency;
         
     public:
         Connectedness_check(){}
