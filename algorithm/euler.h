@@ -13,4 +13,5 @@ class EulerAlgo : public IAlg{
         std::string Calculate();
         void Initialize(Graph* g);
 };
+
 #endif

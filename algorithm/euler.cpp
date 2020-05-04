@@ -92,8 +92,8 @@ std::string EulerAlgo::Calculate(){
     }
 	else {
         ISEulerian = "Graph is Semi-Eulerian. Path is: ";
+        if (res[0] == res[res.size()-1]) ISEulerian = "Graph is Eulerian. Circuit is: ";
         for (size_t i=0; i<res.size(); ++i) {
-            if (res.front() == res.back()) ISEulerian = "Graph is Eulerian. Circuit is: ";
             ISEulerian += to_string(res[i]+1);
             ISEulerian += " ";
         }
