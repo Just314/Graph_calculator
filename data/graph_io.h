@@ -2,6 +2,7 @@
 #define GRAPH_IO_H
 #include <bits/stdc++.h>
 #include "graph.h"
+#include "graph_alt.h"
 
 enum State {Waiting, Reading, Keeping, Closing, Closed};
 
@@ -20,6 +21,7 @@ public:
     void SetGraph(Graph setted);
     void Open();
     Graph* Read();
+    Alt_Graph* Read_alt();
     void Write(std::string data);
     void Close();
     void Create();

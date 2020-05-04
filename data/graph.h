@@ -13,7 +13,9 @@ enum GraphClassify{
     Weighted = (1u << 5),
     Bipartite = (1u << 6),
     Complete = (1u << 7),
-    nGraph = (1u << 8)
+    nGraph = (1u << 8),
+    Undirected = (1u << 9),
+    Mixed = (1u << 10)
 };
 
 class Graph
@@ -74,6 +76,12 @@ inline GraphClassify& operator |= (GraphClassify& left, GraphClassify right)
 {
     left = left | right;
     return left;
+}
+
+inline bool operator == (GraphClassify type, GraphClassify querry){
+    u_short flag_val = log2(static_cast<int>(querry));
+    u_short type_shifted = static_cast<int>(type) >> flag_val;
+    return type_shifted%2==1;
 }
 
 

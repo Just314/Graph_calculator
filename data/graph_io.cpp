@@ -176,3 +176,54 @@ Graph* Graph_io::Read(){
     Close();
     return gr;
 }
+
+Alt_Graph* Graph_io::Read_alt(){
+    Open();
+    
+    u_short vNum, eNum, meta; bool hvw, hew;
+
+    file.read((char*)&meta, sizeof(meta));
+
+    file.read((char*)&vNum,sizeof(u_short));
+    file.read((char*)&eNum,sizeof(u_short));
+    file.read((char*)&hvw,sizeof(bool));
+    file.read((char*)&hew,sizeof(bool));
+
+    Alt_Graph* g = new Alt_Graph(vNum);
+
+    if(hvw){
+        for (u_short i = 0; i < vNum; i++)
+        {
+            ushort temp;
+            file.read((char*)&temp,sizeof(u_short));
+        }
+    }
+
+    vector<u_short> ew;
+    if(hew){
+        for (u_short i = 0; i < eNum; i++)
+        {
+            ushort temp;
+            file.read((char*)&temp,sizeof(u_short));
+            ew.push_back(temp);
+        }
+    }
+
+
+    for (u_short i = 0; i < eNum; i++)
+    {
+        u_short a,b;
+        file.read((char*)&a,sizeof(u_short));
+        file.read((char*)&b,sizeof(u_short));
+        if(hew){
+            g->addEdge(a,b,false,ew[i]);
+        } else{
+            g->addEdge(a,b);
+        }
+    }
+    
+    g->type = static_cast<GraphClassify> (meta);
+
+    Close();
+    return g;
+}
