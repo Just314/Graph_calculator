@@ -46,3 +46,21 @@ class Hamiltonian: public IALGFM{
 };
 
 #endif
+
+
+/////INterface principle flow chart///////////
+/*
+    Algo1----\
+    Algo2  ----IAlg interface ---- IALGFM (IAlg Factory method) 
+    Algo3----/                        |
+    .....                             |
+    .                             /   |   \
+    .                           /     |     \
+    .                       FM1      FM2     FM3
+    .                         \       |       /
+    .                            \    |    /
+    .                         IALGFM alg = new FM#
+    .                                 |
+    .                      alg.Execute method for all FM 
+    .
+*/
