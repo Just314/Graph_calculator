@@ -80,15 +80,15 @@ std::string DijkstraAlgo::Calculate(){
     if (dijkstra_weights[init][end] != INF) {
         Shortestlength = Shortestlength + to_string(init+1);
         int flag = end;
-        string temp= " ";
+        std::vector <int> temp;;
         while (flag != init) {
-            temp += to_string(flag+1) + " ";
+            temp.push_back(flag+1);
             flag = before[flag];
         }
         for (int i = temp.size()-1; i >= 0; i--) {
-            Shortestlength = Shortestlength + temp[i];
+            Shortestlength = Shortestlength + " " + to_string(temp[i]);
         }
-        Shortestlength = Shortestlength + "and its length is " + to_string(dijkstra_weights[init][end]) + "\n";
+        Shortestlength = Shortestlength + " and its length is " + to_string(dijkstra_weights[init][end]) + "\n";
     }
     else {
         Shortestlength = "Path does not exist.\n";
