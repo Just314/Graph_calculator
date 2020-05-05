@@ -19,15 +19,14 @@ std::string DijkstraAlgo::Calculate(){
     if(!g->hasVW()) return "Bad input. Please enter weighted graph.\n";
 
     //String returned as an answer
-    string Shortestlength = "The shortest path is:";
+    string Shortestlength = "The shortest path is: ";
 
     int init, end;
     //Initialising matrix of vertice labels to INF (defined as 2^31-1) or to zero if i = j
     int dijkstra_weights[cardinal][cardinal];
     for (int i = 0; i < cardinal; i++) {
         for (int j = 0; j < cardinal; j++) {
-            if (i != j) dijkstra_weights[i][j] = INF;
-            else dijkstra_weights[i][j] = 0;
+            dijkstra_weights[i][j] = INF;
         }
     }
 
@@ -40,7 +39,10 @@ std::string DijkstraAlgo::Calculate(){
     cin >> init >> end;
     init--;
     end--;
-
+    dijkstra_weights[init][init] = 0;
+    //Array needed to remember the order in which path is constructed between any pair of vertices
+    int before[cardinal];
+    memset (before, -1, sizeof(before));
     //Until final vertex is not visited graph is traversed and labels are updated
     while (!visited[end]) {
 
@@ -63,7 +65,8 @@ std::string DijkstraAlgo::Calculate(){
         for (int i = 0; i < cardinal; i++) {
             if (!visited[i] && adj[min_index][i] && dijkstra_weights[init][min_index] != INF && dijkstra_weights[init][min_index] + adj[min_index][i] < dijkstra_weights[init][i]) {
                 dijkstra_weights[init][i] = dijkstra_weights[init][min_index] + adj[min_index][i];
-                dijkstra_weights[i][init] = dijkstra_weights[init][i];
+                dijkstra_weights[i][init] = dijkstra_weights[init][min_index] + adj[min_index][i];
+                before[i] = min_index;
             }
         }
 
@@ -72,12 +75,20 @@ std::string DijkstraAlgo::Calculate(){
     }
 
     /*If label of final vertex is not 2^31-1, there exists path to this vertex 
-    and algorithm updates the answer string and prints path and its length*/ 
+    and algorithm updates the answer string and prints path and its length. 
+    Path is restored through before array*/ 
     if (dijkstra_weights[init][end] != INF) {
-        for (int i = 0; i < counter; i++) {
-            Shortestlength = Shortestlength + " " + to_string(path[i]+1);
+        Shortestlength = Shortestlength + to_string(init+1);
+        int flag = end;
+        string temp= " ";
+        while (flag != init) {
+            temp += to_string(flag+1) + " ";
+            flag = before[flag];
         }
-        Shortestlength = Shortestlength + ". Its length is " + to_string(dijkstra_weights[init][end]) + "\n";
+        for (int i = temp.size()-1; i >= 0; i--) {
+            Shortestlength = Shortestlength + temp[i];
+        }
+        Shortestlength = Shortestlength + "and its length is " + to_string(dijkstra_weights[init][end]) + "\n";
     }
     else {
         Shortestlength = "Path does not exist.\n";
