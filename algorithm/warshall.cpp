@@ -11,7 +11,7 @@ void WarshallAlgo::Initialize(Graph* g_in){
 }
 
 std::string WarshallAlgo::Calculate(){
-    string Shortestlength = "The shortest path is: ";
+    string Shortestlength = "The shortest path is:";
     int init, end;
     int dijkstra_weights[cardinal][cardinal];
     for (int i = 0; i < cardinal; i++) {
@@ -45,9 +45,14 @@ std::string WarshallAlgo::Calculate(){
         }
         counter++;
     }
-    for (int i = 0; i < counter; i++) {
-        Shortestlength = Shortestlength + " " + to_string(path[i]+1);
+    if (dijkstra_weights[init][end] != INF) {
+        for (int i = 0; i < counter; i++) {
+            Shortestlength = Shortestlength + " " + to_string(path[i]+1);
+        }
+        Shortestlength = Shortestlength + ". Its length is " + to_string(dijkstra_weights[init][end]) + "\n";
     }
-    Shortestlength = Shortestlength + ". Its length is " + to_string(dijkstra_weights[init][end]) + "\n";
+    else {
+        Shortestlength = "Path does not exist.\n";
+    }
     return Shortestlength;
 }

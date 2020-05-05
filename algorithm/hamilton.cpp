@@ -9,7 +9,6 @@ bool HamiltonAlgo::Hamilton(u_short current) {
             return true;
         }
         else {
-            ispath = true;
             return false;
         }
     visited[current] = true;
@@ -33,21 +32,8 @@ void HamiltonAlgo::Initialize(Graph* g_in){
 std::string HamiltonAlgo::Calculate(){
     string ISHamiltonian;
     bool answer = false;
-    for (u_short i = 0; i < cardinality; i++) {
-        if (!Hamilton(i) && !ispath) path.erase(path.begin(), path.end());
-        else { 
-            answer = true;
-            break;
-        }
-    }
-    if (answer) {
-        ISHamiltonian = "Graph has Hamiltonian cycle: ";
-        if (ispath) ISHamiltonian = "Graph has Hamiltonian path ";
-        for (size_t i=0; i<path.size(); ++i) {
-            ISHamiltonian += to_string(path[i]+1);
-            ISHamiltonian += " ";
-        }
-        ISHamiltonian += "\n";
+    if (Hamilton(0)) {
+        ISHamiltonian = "Graph has Hamiltonian cycle.\n";
     }
     else {
         ISHamiltonian = "Graph is not Hamiltonian.\n";
