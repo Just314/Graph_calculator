@@ -46,7 +46,7 @@ void Connectedness_check::Depth_Fist_SearchOut(u_short s) {
 
 /*Here traverses transpose of graph (it into directed edges).
 it counts the number of vertices from which it is possible to enter the first vertex.
-Vertex is proceeded if and only there is and edge to it from current vertex */
+Vertex is proceeded if and only there is and edge from it to the current vertex */
 void Connectedness_check::Depth_Fist_SearchIn(u_short s) {
     if (visitedIn[s]) return;
     counterIn++;
