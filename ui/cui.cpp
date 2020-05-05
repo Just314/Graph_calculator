@@ -180,7 +180,7 @@ void DisplayGraph(){
     <<g->MatrixToString()
     ;
 
-    if(g->hasVW()){
+    /*if(g->hasVW()){
         std::cout 
         << "Vertecies Weights:\n"
         ;
@@ -189,8 +189,8 @@ void DisplayGraph(){
             << char(97+i) << " " << g->getVWeigth(i) << "\n"
             ;
         }
-    }
-
+    }*/
+    std::cout << "Weights Matrix: \n\n";
     auto adj = g->MatrixWeighted();
     for (int i = 0; i < g->getVertCount(); i++)
     {

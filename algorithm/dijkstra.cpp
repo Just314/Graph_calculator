@@ -1,8 +1,8 @@
-#include "warshall.h"
+#include "dijkstra.h"
 using namespace std;
 int INF = INT_MAX;
 
-void WarshallAlgo::Initialize(Graph* g_in){
+void DijkstraAlgo::Initialize(Graph* g_in){
     g = g_in;
     adj = g->MatrixWeighted();
     cardinal = g->getVertCount();
@@ -10,7 +10,8 @@ void WarshallAlgo::Initialize(Graph* g_in){
     counter = 0;
 }
 
-std::string WarshallAlgo::Calculate(){
+std::string DijkstraAlgo::Calculate(){
+    if(!g->hasVW()) return "Bad input. Please enter weighted graph.\n";
     string Shortestlength = "The shortest path is:";
     int init, end;
     int dijkstra_weights[cardinal][cardinal];

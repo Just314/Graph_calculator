@@ -1,6 +1,6 @@
 
-output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o hamilton.o
-	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o warshall.o hamilton.o -o output
+output: main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o dijkstra.o hamilton.o
+	g++ main.o cui.o graph_io.o graph.o alg_fac_meth.o conn_alg.o euler.o dijkstra.o hamilton.o -o output
 
 main.o: main.cpp
 	g++ -c -g main.cpp
@@ -23,8 +23,8 @@ conn_alg.o: ./algorithm/conn_alg.cpp ./algorithm/conn_alg.h ./algorithm/alg.h
 euler.o: ./algorithm/euler.cpp ./algorithm/euler.h ./algorithm/alg.h
 	g++ -c -g ./algorithm/euler.cpp
 
-warshall.o: ./algorithm/warshall.cpp ./algorithm/warshall.h ./algorithm/alg.h
-	g++ -c -g ./algorithm/warshall.cpp
+dijkstra.o: ./algorithm/dijkstra.cpp ./algorithm/dijkstra.h ./algorithm/alg.h
+	g++ -c -g ./algorithm/dijkstra.cpp
 
 hamilton.o: ./algorithm/hamilton.cpp ./algorithm/hamilton.h ./algorithm/alg.h
 	g++ -c -g ./algorithm/hamilton.cpp

@@ -5,7 +5,7 @@
 #include "alg.h"
 #include "conn_alg.h"
 #include "euler.h"
-#include "warshall.h"
+#include "dijkstra.h"
 #include "hamilton.h"
 
 class IALGFM
@@ -34,7 +34,7 @@ class CheckEuler: public IALGFM{
 class ShortestPath: public IALGFM{
     public:
     IAlg* FactoryMethod() override{
-        return new WarshallAlgo();
+        return new DijkstraAlgo();
     }
 };
 

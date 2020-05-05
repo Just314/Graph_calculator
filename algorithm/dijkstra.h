@@ -2,7 +2,7 @@
 #define WARSHALL_ALG_H
 #include "alg.h"
 
-class WarshallAlgo : public IAlg{
+class DijkstraAlgo : public IAlg{
     private:
         Graph* g;
         u_short** adj;
@@ -11,7 +11,7 @@ class WarshallAlgo : public IAlg{
         std::vector<int> path;
         int counter;
     public:
-        WarshallAlgo(){}
+        DijkstraAlgo(){}
         std::string Calculate();
         void Initialize(Graph* g);
 
