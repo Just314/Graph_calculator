@@ -91,9 +91,14 @@ void Graph_io::Write(string data){
     Create();
     file.seekp(0);
 
+    //16 bits of meatdata from GraphClassify bitmask!!! DO NOT CHANGE OR FILES WILL BECOME CORRUPTED!!!
+    //Changed in Graph model 2.0 version // serves as legacy and backward-compatible writer for Model v2 
     u_int16_t meta = g.type;
     file.write((char*)&meta,sizeof(meta));
 
+    //------------------------------------------
+    //------Meta set for correct file read------
+    //------------------------------------------
     u_short vcount = g.getVertCount();
     u_short ecount = g.getEdgesCount();
 
@@ -103,8 +108,10 @@ void Graph_io::Write(string data){
     bool hvw = g.hasVW(); bool hew = g.hasEW();
     file.write((char*)&hvw,sizeof(bool));
     file.write((char*)&hew,sizeof(bool));
-    
+    //------------End of Meta set---------------
 
+    //------------Set vertex weights------------
+    //DEPRECATED!!!! DO NOT CHANGE OR FILES WILL BE CORRUPTED!!!
     if(hvw){
         for (u_short i =0; i<vcount;i++){
             auto w = g.getVWeigth(i);
@@ -112,6 +119,9 @@ void Graph_io::Write(string data){
         }
     }
 
+    //----------Set of edges weights------------
+
+    // Does not utilized directly DO NOT CHANGE!!!
     if(hew){
         for(u_short i =0;i<ecount;i++){
             auto w = g.getEWeight(i);
@@ -119,12 +129,15 @@ void Graph_io::Write(string data){
         }
     }
 
+    //--------------EDGES SETTER---------------
     for(u_short i =0; i<ecount;i++){
         auto ed = g.getEdge(i);
         file.write((char*)&ed.first,sizeof(u_short));
         file.write((char*)&ed.second,sizeof(u_short));
     }
    
+
+   //-------------Weight Matrix Setter-------------
     if(hvw){
         auto adj = g.MatrixWeighted();
         for (u_short i = 0; i < vcount; i++)
@@ -138,25 +151,35 @@ void Graph_io::Write(string data){
         
     }
 
-
+    //Close writing stream
     Close();
 }
 
 Graph* Graph_io::Read(){
     Open();
+
+    //--------Meta definiton------------
     u_short vnum, enums; bool hvw,hew;
 
     u_int16_t meta;
 
+    //----------------------------------
+    //-----------Meta Reading-----------
+    //----------------------------------
     file.read((char*)&meta, sizeof(meta));
 
     file.read((char*)&vnum,sizeof(u_short));
     file.read((char*)&enums,sizeof(u_short));
     file.read((char*)&hvw,sizeof(bool));
     file.read((char*)&hew,sizeof(bool));
+    //----------End of meta read--------
 
+    //Create new graph pointer for retern value
+    // Is not weighted by default - if weighted, property will be automaticlly setted
     Graph* gr = new Graph(vnum);
 
+    //----------Read Vertex Weights------------
+    /////Deprecated///// DO NOT CHANGE!!!!!!
     if(hvw){
         for (u_short i = 0; i < vnum; i++)
         {
@@ -166,6 +189,8 @@ Graph* Graph_io::Read(){
         }
     }
 
+    //----------Read Edges Weights------------
+    //IS NOT USED DIRECTLY -- DO NOT TOUCH
     if(hew){
         for (u_short i = 0; i < enums; i++)
         {
@@ -175,7 +200,7 @@ Graph* Graph_io::Read(){
         }
     }
 
-
+    //----------EDGES READ---------------
     for (u_short i = 0; i < enums; i++)
     {
         u_short a,b;
@@ -184,6 +209,7 @@ Graph* Graph_io::Read(){
         gr->addEdge(a,b);
     }
     
+    //-------------Weight Matrix Read----------
     if (hvw){
         for (u_short i = 0; i < vnum; i++)
         {
@@ -198,9 +224,35 @@ Graph* Graph_io::Read(){
         
     }
 
-
+    //Set meta  --- currently is not used --- META IS KEPT FOR Graph Model v2
     gr->type = static_cast<GraphClassify> (meta);
 
+    //Close reading stream
     Close();
     return gr;
 }
+
+
+
+/*   ----------- .AG   FILE FORMAT GUIDE  -------------
+.         ------------------------------------
+.         -------------Meta  Header-----------
+.         ------------------------------------
+.         ------- Tags bit mask - 16 bit -----
+.         ------------------------------------
+.         --------Vertex number - 16 bit -----
+.         ------- Edges number - 16 bit ------
+.         ------------------------------------
+.         ----Has weighted Vertecies? - 1 bit-
+.         ----Has weighted Edges? - 1 bit-----
+.         ------------------------------------
+.         --------- End of Meta Header -------
+.         ------------------------------------
+.         ----------------DATA----------------
+.         ------------------------------------
+.         ---Edges - 32 * dec(Edges Number)---
+.         --Weight Matrix - 16 * (Vert Num)^2-
+.         ------------------------------------
+.         -------------END OF DATA------------
+.         ------------------------------------
+*/
